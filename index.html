@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>边界 · 大气博客</title>
+  <!-- 优雅 Inter 字体，兼顾现代感与可读性 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 免费图标库，增添精致细节 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* 全局重置 & 基调 —— 干净、透气 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f4f6fa;  /* 极浅灰蓝底，柔和大气 */
+      color: #1e293b;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 流畅容器，最大宽度 1280px，呼吸空间 */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ===== 导航栏 ===== */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      margin-bottom: 2.5rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #1e2b3c, #2c3e50);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .logo i {
+      background: none;
+      -webkit-text-fill-color: #3b4b5e; /* 保留图标原有色彩 */
+      margin-right: 6px;
+      font-size: 1.6rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      font-weight: 500;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #334155;
+      font-size: 1rem;
+      transition: color 0.2s ease;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+    }
+    .nav-links a:hover {
+      color: #0f172a;
+      border-bottom-color: #8b5cf6; /* 淡紫色点缀 */
+    }
+
+    /* ===== 页头描述 ===== */
+    .hero {
+      margin: 2rem 0 3.5rem 0;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      background: linear-gradient(145deg, #1c2b3a, #2d3f53);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.6rem;
+    }
+    .hero p {
+      font-size: 1.3rem;
+      color: #546e7a;
+      max-width: 600px;
+      margin: 0 auto;
+      font-weight: 350;
+    }
+
+    /* 最新文章标题 + 装饰线 */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2.2rem;
+    }
+    .section-header h2 {
+      font-size: 2rem;
+      font-weight: 550;
+      color: #1e2b3c;
+      letter-spacing: -0.01em;
+      position: relative;
+    }
+    .section-header h2::after {
+      content: '';
+      display: block;
+      width: 70px;
+      height: 4px;
+      background: linear-gradient(90deg, #8b5cf6, #60a5fa);
+      border-radius: 4px;
+      margin-top: 8px;
+    }
+    .section-header a {
+      text-decoration: none;
+      color: #4b587c;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .section-header a:hover {
+      color: #8b5cf6;
+    }
+    .section-header a i {
+      font-size: 0.85rem;
+    }
+
+    /* ===== 卡片网格 ===== */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    /* 卡片基础样式 — 白色、圆润、层次阴影 */
+    .card {
+      background: #ffffff;
+      border-radius: 1.8rem;
+      padding: 1.8rem 1.8rem 2rem 1.8rem;
+      box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+      border-left: 6px solid transparent;  /* 左侧色条预留 */
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      backdrop-filter: blur(2px);
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 45px -15px rgba(37, 99, 235, 0.15);
+    }
+
+    /* 左侧边框颜色 — 每种类别独特色彩 (大气而不刺眼) */
+    .border-css { border-left-color: #0891b2; }      /* 静谧蓝 */
+    .border-js { border-left-color: #f59e0b; }       /* 暖阳橙 */
+    .border-tutorial { border-left-color: #8b5cf6; } /* 淡紫 */
+    .border-design { border-left-color: #ec4899; }   /* 粉红 */
+    .border-node { border-left-color: #059669; }     /* 翡翠绿 */
+    .border-guide { border-left-color: #64748b; }    /* 鼠尾岩灰 */
+
+    /* 卡片元数据第一行 (标签 + 日期) */
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    .tag {
+      background: #eef2f6;
+      color: #2d3f4f;
+      padding: 0.3rem 1rem;
+      border-radius: 30px;
+      font-weight: 500;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.3px;
+    }
+    .tag i {
+      font-size: 0.85rem;
+      color: #5f6c84;
+    }
+    .date {
+      color: #6f7d95;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 400;
+      font-size: 0.85rem;
+    }
+
+    /* 卡片标题 */
+    .card h3 {
+      font-size: 1.55rem;
+      font-weight: 600;
+      line-height: 1.3;
+      margin: 0.3rem 0 0.8rem 0;
+      color: #0f263b;
+    }
+
+    /* 摘要 */
+    .card p {
+      color: #475569;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      font-size: 0.98rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    /* 卡片底部：阅读更多 + 阅读时间 */
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #e9edf2;
+      padding-top: 1.2rem;
+      margin-top: 0.2rem;
+    }
+    .read-more {
+      text-decoration: none;
+      font-weight: 550;
+      color: #2563eb;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.2s;
+    }
+    .read-more i {
+      font-size: 0.8rem;
+      transition: transform 0.2s;
+    }
+    .read-more:hover {
+      color: #8b5cf6;
+    }
+    .read-more:hover i {
+      transform: translateX(4px);
+    }
+    .reading-time {
+      color: #6f7d95;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: #f0f4fa;
+      padding: 0.2rem 0.7rem;
+      border-radius: 30px;
+    }
+
+    /* ===== 页脚 ===== */
+    .footer {
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 3rem 0 2.5rem 0;
+      margin-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      color: #4a5a72;
+    }
+    .footer-copyright {
+      font-size: 0.95rem;
+    }
+    .footer-copyright i {
+      color: #ec4899;
+      margin: 0 4px;
+    }
+    .social-links {
+      display: flex;
+      gap: 2rem;
+    }
+    .social-links a {
+      color: #5d6f88;
+      font-size: 1.3rem;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .social-links a:hover {
+      color: #0f172a;
+      transform: translateY(-3px);
+    }
+
+    /* 响应式微调 */
+    @media (max-width: 700px) {
+      .navbar {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .nav-links {
+        gap: 1.8rem;
+      }
+      .hero h1 {
+        font-size: 2.4rem;
+      }
+      .hero p {
+        font-size: 1.1rem;
+      }
+      .section-header {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+      .footer {
+        flex-direction: column-reverse;
+        text-align: center;
+      }
+    }
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 1.2rem;
+      }
+      .card {
+        padding: 1.5rem;
+      }
+    }
+
+    /* 点缀：选中文字效果 */
+    ::selection {
+      background: #c7d2fe;
+      color: #1e1b4b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 导航栏 · 简约留白 -->
+    <nav class="navbar">
+      <div class="logo">
+        <i class="fas fa-mountain"></i> 边界·BOUNDARY
+      </div>
+      <div class="nav-links">
+        <a href="#">首页</a>
+        <a href="#">文章</a>
+        <a href="#">关于</a>
+        <a href="#">联系</a>
+      </div>
+    </nav>
+
+    <!-- 温和的 hero 区 —— 大气开场 -->
+    <div class="hero">
+      <h1>记录思考 · 探索边界</h1>
+      <p>设计、代码与人文的交叉点。不定期更新深度内容。</p>
+    </div>
+
+    <!-- 最新文章区域 + 查看全部链接（装饰性） -->
+    <div class="section-header">
+      <h2>最新文章</h2>
+      <a href="#">查看全部 <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <!-- 博客卡片网格 · 6 篇精致预览 -->
+    <div class="blog-grid">
+      
+      <!-- 卡片 1: CSS 容器查询 (border-css) -->
+      <article class="card border-css">
+        <div class="card-meta">
+          <span class="tag"><i class="fab fa-css3-alt"></i> CSS</span>
+          <span class="date"><i class="far fa-calendar-alt"></i> 2024.03.05</span>
+        </div>
+        <h3>CSS 容器查询 —— 真正的组件化</h3>
+        <p>摆脱视口的限制，基于父容器尺寸创建自适应界面。深入解析容器查询与单位。</p>
+        <div class="card-footer">
+          <a href="#" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+          <span class="reading-time"><i class="far fa-clock"></i> 6 min</span>
+        </div>
+      </article>
+
+      <!-- 卡片 2: JavaScript 闭包 (border-js) -->
+      <article class="card border-js">
+        <div class="card-meta">
+          <span class="tag"><i class="fab fa-js"></i> JavaScript</span>
+          <span class="date"><i class="far fa-calendar-alt"></i> 2024.02.28</span>
+        </div>
+        <h3> JavaScript 闭包：核心与进阶模式</h3>
+        <p>从执行上下文到模块模式，彻底理解闭包的形成机制与内存管理。</p>
+        <div class="card-footer">
+          <a href="#" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+          <span class="reading-time"><i class="far fa-clock"></i> 8 min</span>
+        </div>
+      </article>
+
+      <!-- 卡片 3: GitHub Actions 部署 (border-tutorial) -->
+      <article class="card border-tutorial">
+        <div class="card-meta">
+          <span class="tag"><i class="fas fa-book-open"></i> 教程</span>
+          <span class="date"><i class="far fa-calendar-alt"></i> 2024.02.20</span>
+        </div>
+        <h3>GitHub Actions 自动化部署指南</h3>
+        <p>从零配置 CI/CD 工作流，将静态网站自动部署到服务器或 Pages。</p>
+        <div class="card-footer">
+          <a href="#" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+          <span class="reading-time"><i class="far fa-clock"></i> 5 min</span>
+        </div>
+      </article>
+
+      <!-- 卡片 4: 2024 UI 设计趋势 (border-design) -->
+      <article class="card border-design">
+        <div class="card-meta">
+          <span class="tag"><i class="fas fa-paint-brush"></i> 设计</span>
+          <span class="date"><i class="far fa-calendar-alt"></i> 2024.02.15</span>
+        </div>
+        <h3>2024 年界面设计 · 温和重构</h3>
+        <p>大圆角、浮动模糊、叙事型微交互——今年不可忽视的 UI 风向。</p>
+        <div class="card-footer">
+          <a href="#" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+          <span class="reading-time"><i class="far fa-clock"></i> 7 min</span>
+        </div>
+      </article>
+
+      <!-- 卡片 5: Node.js 20 新特性 (border-node) -->
+      <article class="card border-node">
+        <div class="card-meta">
+          <span class="tag"><i class="fab fa-node"></i> Node.js</span>
+          <span class="date"><i class="far fa-calendar-alt"></i> 2024.02.10</span>
+        </div>
+        <h3>Node.js 20 新特性一览</h3>
+        <p>权限模型、原生测试运行器、V8 升级。现代后端开发必知。</p>
+        <div class="card-footer">
+          <a href="#" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+          <span class="reading-time"><i class="far fa-clock"></i> 5 min</span>
+        </div>
+      </article>
+
+      <!-- 卡片 6: 从零搭建博客 (border-guide) -->
+      <article class="card border-guide">
+        <div class="card-meta">
+          <span class="tag"><i class="fas fa-compass"></i> 指南</span>
+          <span class="date"><i class="far fa-calendar-alt"></i> 2024.02.05</span>
+        </div>
+        <h3>从零开始搭建个人博客</h3>
+        <p>框架选型、内容策略、SEO 优化——构建一个长远维护的写作空间。</p>
+        <div class="card-footer">
+          <a href="#" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+          <span class="reading-time"><i class="far fa-clock"></i> 9 min</span>
+        </div>
+      </article>
+    </div>
+
+    <!-- 页脚 · 简洁大气，带社交氛围 -->
+    <footer class="footer">
+      <div class="footer-copyright">
+        <i class="far fa-copyright"></i> 2024 边界·BOUNDARY  |  由 <i class="fas fa-heart" style="color: #ec4899;"></i> 与 GitHub Pages 驱动
+      </div>
+      <div class="social-links">
+        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="RSS"><i class="fas fa-rss"></i></a>
+        <a href="#" aria-label="邮箱"><i class="far fa-envelope"></i></a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- 没有任何复杂脚本 —— 纯静态，极致轻盈 -->
+</body>
+</html>
