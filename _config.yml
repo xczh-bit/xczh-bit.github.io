@@ -42,7 +42,7 @@ filename_case: 0
 render_drafts: false
 post_asset_folder: false
 relative_link: false
-future: false
+future: True
 syntax_highlighter: highlight.js
 highlight:
   line_number: true
@@ -96,7 +96,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-# theme: minima
+theme: minima
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
