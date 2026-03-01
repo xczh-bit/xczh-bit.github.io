@@ -24,10 +24,19 @@ jobs:
       - name: Run build
         run: npm run build # 运行编译操作
       
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3 # 上传public目录内容
+      # - name: Upload Pages artifact
+      #   uses: actions/upload-pages-artifact@v3 # 上传public目录内容
+      #   with:
+      #     path: public
+      - name: Upload artfact To static page branch
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          path: public
+           folder: public
+           token: ${{ secrets.ACCESS_TOKEN }} # 令牌
+           branch: main
+           git-config-name: xczh-bit
+           git-config-email: 2630107126@qq.com
+
     # 部署博客  
   deploy:
     needs: build   # 依赖上一个build操作
