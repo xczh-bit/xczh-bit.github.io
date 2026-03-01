@@ -1,7 +1,7 @@
 name: automaticly update blogs
 on: 
  branches:
-  - main # main分支
+  - master # main分支
 jobs:
   build:
     runs-on: ubuntu-latest # 使用 Ubuntu 最新版虚拟机
@@ -26,3 +26,17 @@ jobs:
         uses: actions/upload-pages-artifact@v3 # 上传public目录内容
         with:
           path: ./public
+    # 部署博客  
+  deploy:
+    needs: build   # 依赖上一个build操作
+    permissions:   # # 需授予 Pages 写入权限和生成部署令牌的权限
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:         # 使用actions 部署
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
