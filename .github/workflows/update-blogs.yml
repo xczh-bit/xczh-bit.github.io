@@ -1,7 +1,9 @@
 name: automaticly update blogs
 on: 
- branches:
-  - master # main分支
+  push:
+    branches: ["master"] # master
+  pull_request:
+    branches: ["master"] # master
 jobs:
   build:
     runs-on: ubuntu-latest # 使用 Ubuntu 最新版虚拟机
